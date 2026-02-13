@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema; // <-- THIS WAS MISSING
 
 const listingSchema = new Schema({
   title: {
