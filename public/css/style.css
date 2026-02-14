@@ -1,15 +1,106 @@
-/* body{
-    background-color: pink;
-} */
+body{
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+ }
+
 .navbar{
     height:5rem;
     background-color: white;
-
 }
+
 .fa-compass{
     color: #fe424d;
     font-size: 2rem;
 }
+
 .nav-link{
     color: #222222!important;
+}
+
+/* Footer */
+
+.f-info{
+    background-color:#ebebeb;
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;   /* stack everything vertically */
+    align-items: center;      /* center all items */
+    gap: 0.8rem;
+}
+
+/* Links at top */
+.f-info-links{
+    width:100%;
+    text-align:left;
+    padding-left:2rem;
+}
+
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+/* Social icons */
+.f-info-social{
+    display:flex;
+    justify-content:center;
+    gap:1.5rem;
+}
+
+/* Company name */
+.f-info-company{
+    font-size:0.9rem;
+    color:#222222;
+}
+.card{
+    border: none !important;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover!important;
+}
+.card-body{
+    padding: 0!important;
+}
+.card-text{
+    font-weight: 400;
+}
+.listing-links{
+    text-decoration: none;
+}
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+.container{
+    flex:1;
+}
+/* ================= FORM FIX ================= */
+
+.form-container{
+    max-width: 500px;   /* makes form smaller */
+    margin: 0 auto;     /* center the form */
+}
+
+.form-container .form-control{
+    padding: 0.45rem 0.75rem;  /* smaller input height */
+}
+
+.form-container textarea{
+    height: 90px;  /* smaller textarea */
+}
+
+.form-container .btn{
+    padding: 0.4rem 1rem;  /* smaller button */
 }
