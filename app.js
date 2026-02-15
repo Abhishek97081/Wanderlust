@@ -93,3 +93,11 @@ app.delete("/listings/:id", async (req, res) => {
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
 });
+app.put("/listings/:id", async (req, res) => {
+  const { id } = req.params;
+
+  // Update using Mongoose, ensure nested image object works
+  const updatedListing = await Listing.findByIdAndUpdate(id, { ...req.body.listing }, { new: true, runValidators: true });
+
+  res.redirect(`/listings/${id}`);
+});

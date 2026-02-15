@@ -1,39 +1,44 @@
+<% layout("layouts/boilerplate") %>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wanderlust</title>
-  </head>
-  <%- include('includes/navbar') %>
+<div class="form-wrapper">
+  <div class="form-card">
+    <h3>Edit Your Listing</h3>
 
-  <body>
-    <h3>Edit your Listing</h3>
     <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
-      <input name="listing[title]" value="<%= listing.title %>" type="text" />
-      <br /><br />
-      <textarea name="listing[description]">
-<%= listing.description %></textarea
-      >
-      <br /><br />
-      <input name="listing[image]" value="<%= listing.image %>" type="text" />
-      <br /><br />
-      <input name="listing[price]" value="<%= listing.price %>" type="number" />
-      <br /><br />
-      <input
-        name="listing[country]"
-        value="<%= listing.country %>"
-        type="text"
-      />
-      <br /><br />
-      <input
-        name="listing[location]"
-        value="<%= listing.location %>"
-        type="text"
-      />
-      <br /><br />
-      <button>Edit</button>
+      
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" name="listing[title]" value="<%= listing.title %>" required />
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="listing[description]"><%= listing.description %></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="text" name="listing[image][url]" value="<%= listing.image.url %>" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" name="listing[price]" value="<%= listing.price %>" />
+        </div>
+
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" name="listing[location]" value="<%= listing.location %>" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Country</label>
+        <input type="text" name="listing[country]" value="<%= listing.country %>" />
+      </div>
+
+      <button class="btn-submit">Update</button>
     </form>
-  </body>
-</html>
+  </div>
+</div>

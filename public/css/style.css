@@ -3,104 +3,174 @@ body{
   display: flex;
   flex-direction: column;
   min-height: 100vh;
- }
+}
 
 .navbar{
-    height:5rem;
-    background-color: white;
+  height:5rem;
+  background-color: white;
 }
 
 .fa-compass{
-    color: #fe424d;
-    font-size: 2rem;
+  color: #fe424d;
+  font-size: 2rem;
 }
 
 .nav-link{
-    color: #222222!important;
+  color: #222222!important;
 }
 
 /* Footer */
 
 .f-info{
-    background-color:#ebebeb;
-    padding: 1.5rem 0;
-    display: flex;
-    flex-direction: column;   /* stack everything vertically */
-    align-items: center;      /* center all items */
-    gap: 0.8rem;
+  background-color:#ebebeb;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
 }
 
-/* Links at top */
 .f-info-links{
-    width:100%;
-    text-align:left;
-    padding-left:2rem;
+  width:100%;
+  text-align:left;
+  padding-left:2rem;
 }
 
 .f-info-links a{
-    text-decoration: none;
-    color: #222222;
+  text-decoration: none;
+  color: #222222;
 }
 
 .f-info-links a:hover{
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* Social icons */
 .f-info-social{
-    display:flex;
-    justify-content:center;
-    gap:1.5rem;
+  display:flex;
+  justify-content:center;
+  gap:1.5rem;
 }
 
-/* Company name */
 .f-info-company{
-    font-size:0.9rem;
-    color:#222222;
+  font-size:0.9rem;
+  color:#222222;
 }
+
 .card{
-    border: none !important;
-    margin-bottom: 2rem;
+  border: none !important;
+  margin-bottom: 2rem;
 }
+
 .card-img-top{
-    border-radius: 1rem !important;
-    width: 100% !important;
-    object-fit: cover!important;
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover!important;
 }
+
 .card-body{
-    padding: 0!important;
+  padding: 0!important;
 }
+
 .card-text{
-    font-weight: 400;
+  font-weight: 400;
 }
+
 .listing-links{
-    text-decoration: none;
+  text-decoration: none;
 }
+
 .card-img-overlay{
-    opacity: 0;
+  opacity: 0;
 }
+
 .card-img-overlay:hover{
-    opacity: 0.2;
-    background-color: white;
+  opacity: 0.2;
+  background-color: white;
 }
+
 .container{
-    flex:1;
+  flex:1;
 }
+
 /* ================= FORM FIX ================= */
 
 .form-container{
-    max-width: 500px;   /* makes form smaller */
-    margin: 0 auto;     /* center the form */
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .form-container .form-control{
-    padding: 0.45rem 0.75rem;  /* smaller input height */
+  padding: 0.45rem 0.75rem;
 }
 
 .form-container textarea{
-    height: 90px;  /* smaller textarea */
+  height: 90px;
 }
 
 .form-container .btn{
-    padding: 0.4rem 1rem;  /* smaller button */
+  padding: 0.4rem 1rem;
+}
+
+/* ================= PREMIUM FORM DESIGN ================= */
+
+.form-wrapper {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+}
+
+.form-card {
+  background: white;
+  padding: 2rem;
+  width: 500px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.form-card h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ff385c;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #ff385c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.btn-submit:hover {
+  background-color: #e03150;
 }
