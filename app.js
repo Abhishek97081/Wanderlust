@@ -49,9 +49,13 @@ app.get("/listings/:id", async (req, res) => {
 
 //Create Route
 app.post("/listings", async (req, res) => {
-  const newListing = new Listing(req.body.listing);
+  const { listing } = req.body;   // 👈 extract correctly
+
+  const newListing = new Listing(listing); // 👈 use this
+
   await newListing.save();
-  res.redirect("/listings");
+
+  res.send("Listing saved");
 });
 
 //Edit Route

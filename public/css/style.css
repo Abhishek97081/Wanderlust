@@ -174,3 +174,29 @@ body{
 .btn-submit:hover {
   background-color: #e03150;
 }
+
+/* ================= RESPONSIVE ADDITION (NEWLY ADDED ONLY) ================= */
+
+/* Make form responsive without touching previous styles */
+
+.form-wrapper {
+  padding: 1rem;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+@media (max-width: 576px) {
+
+  .form-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+}
