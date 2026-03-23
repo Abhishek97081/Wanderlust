@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const listingSchema = require("./schema.js");
 
 app.engine("ejs", ejsMate);
 
@@ -36,8 +37,18 @@ app.get("/", (req, res) => {
   res.send("Hi, I am root");
 });
 
-
 // ================= ROUTES =================
+
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(errMsg, 400);
+  } else {
+    next();
+  }
+};
 
 // Index
 app.get("/listings", wrapAsync(async (req, res) => {
@@ -58,16 +69,9 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
 }));
 
 // Create
-app.post("/listings", wrapAsync(async (req, res) => {
-  const { price } = req.body.listing;
-
-  if (!price || isNaN(Number(price))) {
-    throw new ExpressError("Price must be a valid number", 400);
-  }
-
+app.post("/listings", validateListing, wrapAsync(async (req, res) => {
   const newListing = new Listing(req.body.listing);
   await newListing.save();
-
   res.redirect("/listings");
 }));
 
@@ -79,13 +83,8 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
 }));
 
 // Update
-app.put("/listings/:id", wrapAsync(async (req, res) => {
+app.put("/listings/:id", validateListing, wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const { price } = req.body.listing;
-
-  if (!price || isNaN(Number(price))) {
-    throw new ExpressError("Price must be a valid number", 400);
-  }
 
   await Listing.findByIdAndUpdate(
     id,
@@ -103,22 +102,18 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   res.redirect("/listings");
 }));
 
-
 // ================= ERROR HANDLING =================
 
-// 404 handler (FIXED)
-// 404 handler (FINAL FIX)
+// 404 handler
 app.use((req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
 
-// error middleware
+// Error middleware
 app.use((err, req, res, next) => {
   let { message = "Something went wrong", statusCode = 500 } = err;
-
   res.status(statusCode).render("error.ejs", { message });
 });
-
 
 // Server
 app.listen(8080, () => {
