@@ -3,6 +3,7 @@ body{
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: white; /* ✅ removed grey */
 }
 
 .navbar{
@@ -92,33 +93,14 @@ body{
   flex:1;
 }
 
-/* ================= FORM FIX ================= */
-
-.form-container{
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.form-container .form-control{
-  padding: 0.45rem 0.75rem;
-}
-
-.form-container textarea{
-  height: 90px;
-}
-
-.form-container .btn{
-  padding: 0.4rem 1rem;
-}
-
-/* ================= PREMIUM FORM DESIGN ================= */
+/* ================= CLEAN FORM ================= */
 
 .form-wrapper {
   min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8f9fa;
+  background-color: white; /* ✅ no grey */
 }
 
 .form-card {
@@ -126,7 +108,8 @@ body{
   padding: 2rem;
   width: 500px;
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: none; /* ✅ removed shadow */
+  border: none;
 }
 
 .form-card h3 {
@@ -175,28 +158,11 @@ body{
   background-color: #e03150;
 }
 
-/* ================= RESPONSIVE ADDITION (NEWLY ADDED ONLY) ================= */
-
-/* Make form responsive without touching previous styles */
-
-.form-wrapper {
-  padding: 1rem;
-}
-
-.form-card {
-  width: 100%;
-  max-width: 500px;
-}
-
-@media (max-width: 576px) {
-
-  .form-card {
-    padding: 1.5rem;
-    border-radius: 12px;
-  }
-
-  .form-row {
-    flex-direction: column;
-  }
-
+.listing-img {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  margin-bottom: 15px;
 }

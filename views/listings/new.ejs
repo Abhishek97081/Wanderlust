@@ -4,7 +4,7 @@
   <div class="form-card">
     <h3>Create New Listing</h3>
 
-    <form method="POST" action="/listings"  class="needs-validation">
+    <form method="POST" action="/listings"  >
 
       <div class="form-group">
         <label>Title</label>
@@ -13,7 +13,7 @@
 
       <div class="form-group">
         <label>Description</label>
-        <textarea name="listing[description]" required></textarea>
+        <textarea name="listing[description]"></textarea>
       </div>
 
       <div class="form-group">
@@ -24,21 +24,21 @@
       <div class="form-row">
         <div class="form-group">
           <label>Price</label>
-          <input type="number" name="listing[price]" required />
+          <input type="number" name="listing[price]" />
         </div>
 
         <div class="form-group">
           <label>Location</label>
-          <input type="text" name="listing[location]" required />
+          <input type="text" name="listing[location]" />
         </div>
       </div>
 
       <div class="form-group">
         <label>Country</label>
-        <input type="text" name="listing[country]" required />
+        <input type="text" name="listing[country]" />
       </div>
 
-      <button type="submit" class="btn-submit">Create</button>
+      <button class="btn-submit">Create</button>
     </form>
   </div>
 </div>
