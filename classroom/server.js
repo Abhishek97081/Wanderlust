@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const user=require("./routes/user.js");
+const cookiesParser=require("cookie-parser");
+app.use(cookiesParser());
 app.get("/", (req, res) => {        
     res.send("Hello World!");
 });
