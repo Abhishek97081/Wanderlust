@@ -1,0 +1,52 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="form-wrapper">
+  <div class="form-card">
+    <h3>Create Account</h3>
+
+    <form action="/signup" method="POST">
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          name="username" 
+          id="username" 
+          placeholder="Enter username"
+          required
+        >
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          placeholder="Enter email"
+          required
+        >
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          name="password" 
+          id="password" 
+          placeholder="Enter password"
+          required
+        >
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn-submit">
+        Sign Up
+      </button>
+
+    </form>
+  </div>
+</div>
