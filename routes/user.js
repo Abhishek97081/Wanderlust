@@ -3,33 +3,18 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/user.js");
 const { saveRedirectUrl } = require("../middleware.js");
+const user = require("../models/user.js");
+const userController = require("../controllers/user.js");
+const wrapAsync = (fn) => {
+  return function (req, res, next) {
+    fn(req, res, next).catch(next);
+  };};
 
-router.get("/signup", (req, res) => {
-  res.render("users/signup.ejs");
-});
+router.get("/signup", userController.renderSignupForm);
 
-router.post("/signup", async (req, res, next) => {
-  try {
-    const { email, username, password } = req.body;
-    const user = new User({ email, username });
-    const registeredUser = await User.register(user, password);
+router.post("/signup", wrapAsync(userController.signup));
 
-    req.login(registeredUser, (err) => {
-      if (err) {
-        return next(err);
-      }
-      req.flash("success", "Welcome to NestWay");
-      res.redirect("/listings");
-    });
-  } catch (e) {
-    req.flash("error", e.message);
-    res.redirect("/signup");
-  }
-});
-
-router.get("/login", (req, res) => {
-  res.render("users/login.ejs");
-});
+router.get("/login",userController.renderLoginForm);
 
 router.post(
   "/login",
@@ -38,21 +23,10 @@ router.post(
     failureFlash: true,
     failureRedirect: "/login",
   }),
-  (req, res) => {
-    req.flash("success", "Welcome back!");
-    let redirectUrl = res.locals.redirectUrl || "/listings";
-    res.redirect(redirectUrl);
-  }
+  userController.login
 );
 
-router.get("/logout", (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    req.flash("success", "Logged you out!");
-    res.redirect("/listings");
-  });
-});
+router.get("/logout", userController.logout);
+
 
 module.exports = router;
