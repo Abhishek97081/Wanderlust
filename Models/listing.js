@@ -18,22 +18,8 @@ const listingSchema = new Schema({
   description: String,
 
   image: {
-    filename: {
-      type: String,
-      default: "listingimage",
-    },
-    url: {
-      type: String,
-      default: function () {
-        return defaultImages[Math.floor(Math.random() * defaultImages.length)];
-      },
-      set: function (v) {
-        if (!v || v.trim() === "") {
-          return defaultImages[Math.floor(Math.random() * defaultImages.length)];
-        }
-        return v;
-      }
-    },
+    url: String,
+    filename: String,
   },
 
   price: Number,
