@@ -75,10 +75,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Home route fix
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use("/listings", listingsRoutes);
 app.use("/listings/:id/reviews", reviewsRoutes);
 app.use("/", userRoutes);
 
-app.listen(8080, () => {
-  console.log("Server running on port 8080");
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
