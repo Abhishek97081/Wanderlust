@@ -63,7 +63,12 @@ module.exports.index=async (req, res) => {
               { ...req.body.listing },
               { new: true, runValidators: true }
             );
-        
+            if (req.file!=="undefined") { 
+         let url=req.file.path;
+      let filename=req.file.filename;
+      updatedListing.image.url=url;
+      updatedListing.image.filename=filename;
+      await updatedListing.save();}
             if (!updatedListing) {
               req.flash("error", "Listing not found!");
               return res.redirect("/listings");
