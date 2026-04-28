@@ -1,40 +1,149 @@
 <% layout("/layouts/boilerplate")%> 
 
-<body> 
-  <div class="container mt-4"> 
-    <h3 class="mb-4">All Listings</h3>
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 
-    <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4">
+  .filters {
+    text-align: center;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    opacity: 0.7;
+    text-decoration: none;
+    color: #222;
+  }
+
+  .filters:hover {
+    opacity: 1;
+    cursor: pointer;
+    color: #222;
+  }
+
+  .filters p {
+    font-size: 0.8rem;
+  }
+  .tax-toggle {
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    height: 2.5rem;
+    padding: 1rem;
+    margin-left: 5rem;
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<div class="container mt-4"> 
+
+  <div id="filters">
+    <a href="/listings" class="filters">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </a>
+
+    <a href="/listings?category=Rooms" class="filters">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </a>
+
+    <a href="/listings?category=Iconic cities" class="filters">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>Iconic cities</p>
+    </a>
+
+    <a href="/listings?category=Mountains" class="filters">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Mountains</p>
+    </a>
+
+    <a href="/listings?category=Castles" class="filters">
+      <div><i class="fa-solid fa-chess-rook"></i></div>
+      <p>Castles</p>
+    </a>
+
+    <a href="/listings?category=Pools" class="filters">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Amazing pools</p>
+    </a>
+
+    <a href="/listings?category=Camping" class="filters">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </a>
+
+    <a href="/listings?category=Farms" class="filters">
+      <div><i class="fa-solid fa-cow"></i></div>
+      <p>Farms</p>
+    </a>
+
+    <a href="/listings?category=Beachfront" class="filters">
+      <div><i class="fa-solid fa-umbrella-beach"></i></div>
+      <p>Beachfront</p></a>
       
-      <% for(let listing of allListings) { %> 
-        <div class="col"> 
+    <a href="/listings?category=Other" class="filters">
+      <div><i class="fa-solid fa-water"></i></div>
+      <p>Rivers</p></a>
+    <a href="/listings?category=Other" class="filters">
+      <div><i class="fa-solid fa-monument"></i></div>
+      <p>Popular</p></a>
+<div class="tax-toggle">
+  <div class="form-check form-check-reverse form-switch">
+  <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+  <label class="form-check-label" for="switchCheckDefault">Display Taxes</label>
+</div>
+</div>
+  </div>
+
+  <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4 mt-2">
+    
+    <% for(let listing of allListings) { %> 
+      <div class="col"> 
+        
+        <a href="/listings/<%= listing._id %>" class="listing-links text-decoration-none text-dark">
           
-          <a href="/listings/<%= listing._id %>" class="listing-links text-decoration-none text-dark">
+          <div class="card h-100 border-0 shadow-sm"> 
             
-            <div class="card h-100 border-0 shadow-sm"> 
+            <img src="<%= listing.image.url %>" 
+                 class="card-img-top rounded-4" 
+                 style="height: 250px; object-fit: cover;" 
+                 alt="listing image"> 
+            
+            <div class="card-img-overlay"></div>
+
+            <div class="card-body">
               
-              <img src="<%= listing.image.url %>" 
-                   class="card-img-top rounded-4" 
-                   style="height: 250px; object-fit: cover;" 
-                   alt="listing image"> 
-              
-              <div class="card-img-overlay"></div>
+              <h5 class="card-title mb-1"><%= listing.title %></h5>
 
-              <div class="card-body">
-                
-                <h5 class="card-title mb-1"><%= listing.title %></h5>
+              <p class="card-text text-muted">
+                ₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>/night
+              </p> 
 
-                <!-- ✅ FIXED LINE -->
-                <p class="card-text text-muted">
-                  ₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>/night
-                </p> 
+            </div> 
+          </div>
 
-              </div> 
-            </div>
+        </a> 
+      </div> 
+    <% } %>
 
-          </a> 
-        </div> 
-      <% } %>
-
-    </div> 
   </div> 
+</div>
+<script>
+  const taxToggle = document.querySelector("#switchCheckDefault");
+  const priceElements = document.querySelectorAll(".card-text");
+
+  taxToggle.addEventListener("change", () => {
+    priceElements.forEach(el => {
+      let price = parseInt(el.textContent.replace(/[^0-9]/g, ""));
+      if (taxToggle.checked) {
+        price = Math.round(price * 1.18);
+        el.textContent = `₹ ${price.toLocaleString("en-IN")}/night`;
+      } else {
+        price = Math.round(price / 1.18);
+        el.textContent = `₹ ${price.toLocaleString("en-IN")}/night`;
+      }
+    });
+  });
+</script>

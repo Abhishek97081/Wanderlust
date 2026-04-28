@@ -15,17 +15,16 @@
         <label>Description</label>
         <textarea name="listing[description]"></textarea>
       </div>
-      
+
       <div class="form-group">
         <label>Upload Image</label>
-        <input type="file" name="listing[image][url]" />
-        
+        <input type="file" name="listing[image]" />
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label>Price</label>
-          <input type="text" name="listing[price]" />
+          <input type="number" name="listing[price]" />
         </div>
 
         <div class="form-group">
@@ -37,6 +36,18 @@
       <div class="form-group">
         <label>Country</label>
         <input type="text" name="listing[country]" />
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select name="listing[category]" required>
+          <option value="Other">Other</option>
+          <option value="Mountains">Mountains</option>
+          <option value="Arctic">Arctic</option>
+          <option value="Pools">Pools</option>
+          <option value="Camping">Camping</option>
+          <option value="Farms">Farms</option>
+        </select>
       </div>
 
       <button class="btn-submit">Create</button>

@@ -1,28 +1,52 @@
 const mongoose = require("mongoose");
-const initdata = require("./data.js");
-const Listing = require("../models/listing.js");
+const initData = require("./data.js");
+const Listing = require("../Models/listing.js");
 
-const Mongo_URL = "mongodb://127.0.0.1:27017/Wanderlust";
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+require("dotenv").config();
+
+const mapToken = process.env.Map_Token;
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
+main()
+  .then(() => {
+    console.log("Connected to DB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 async function main() {
-  await mongoose.connect(Mongo_URL);
+  await mongoose.connect(MONGO_URL);
 }
 
 const initDB = async () => {
   await Listing.deleteMany({});
 
-  initdata.data = initdata.data.map((obj) => ({
-    ...obj,
-    owner: "64b8c9e5f1a4c0d1b2e5f6a7",
-  }));
+  const ownerId = "69d179668e3dd896d25c9fd2";
 
-  await Listing.insertMany(initdata.data);
-  console.log("Data was initialized");
+  const listingsWithGeometry = await Promise.all(
+    initData.data.map(async (listing) => {
+      const response = await geocodingClient
+        .forwardGeocode({
+          query: `${listing.location}, ${listing.country}`,
+          limit: 1,
+        })
+        .send();
+
+      return {
+        ...listing,
+        owner: ownerId,
+        category: listing.category || "Other",
+        geometry: response.body.features[0].geometry,
+      };
+    })
+  );
+
+  await Listing.insertMany(listingsWithGeometry);
+  console.log("Data initialized with geometry and owner!");
 };
 
-main()
-  .then(async () => {
-    console.log("Connected to DB");
-    await initDB();
-  })
-  .catch((err) => console.log(err));
+initDB();

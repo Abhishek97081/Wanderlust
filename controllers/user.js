@@ -13,7 +13,7 @@ module.exports.signup= async (req, res, next) => {
       if (err) {
         return next(err);
       }
-      req.flash("success", "Welcome to NestWay");
+      req.flash("success", "Welcome to StayGo");
       res.redirect("/listings");
     });
   } catch (e) {

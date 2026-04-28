@@ -1,9 +1,5 @@
 <% layout("/layouts/boilerplate") %>
-<script>
-  const mapToken = "<%= process.env.Map_Token %>";
-   const listing = <%- JSON.stringify(listing.geometry.coordinates) %>;
-   <!-- const location = "<%= listing.location %>"; -->
-</script>
+
 <div class="container mt-4 d-flex justify-content-center">
   <div style="max-width: 600px; width: 100%;">
 
@@ -39,7 +35,6 @@
 
     <hr>
 
-    <!-- ⭐ REVIEW FORM -->
     <% if (currUser) { %>
       <h4 class="text-center mb-3">Leave a review</h4>
 
@@ -96,7 +91,6 @@
 
     <hr>
 
-    <!-- ⭐ ALL REVIEWS -->
     <h4 class="mb-3">All Reviews</h4>
 
     <% if (listing.reviews.length > 0) { %>
@@ -111,7 +105,6 @@
 
             <p class="card-text"><%= review.comment %></p>
 
-            <!-- ⭐ FIXED RATING DISPLAY -->
             <p 
               class="starability-result" 
               data-rating="<%= review.rating %>"
@@ -135,11 +128,25 @@
     <% } else { %>
       <p>No reviews yet.</p>
     <% } %>
-    <div class="col-8 offset-3 mb-3">
-      <h3>Where you'll stay</h3>
-      <div id="map"></div>
-    </div>
+
+    <% if (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) { %>
+      <hr>
+
+      <div class="mb-3">
+        <h3>Where you'll stay</h3>
+        <div id="map"></div>
+      </div>
+
+      <script>
+        const mapToken = "<%= process.env.Map_Token %>";
+        const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+        const listingLocation = "<%= listing.location %>";
+      </script>
+
+      <script src="/js/map.js"></script>
+    <% } else { %>
+      <p class="text-danger">Map location not available for this listing.</p>
+    <% } %>
 
   </div>
 </div>
-<script src="/js/map.js"></script>
