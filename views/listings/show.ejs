@@ -1,6 +1,8 @@
 <% layout("/layouts/boilerplate") %>
 <script>
   const mapToken = "<%= process.env.Map_Token %>";
+   const listing = <%- JSON.stringify(listing.geometry.coordinates) %>;
+   <!-- const location = "<%= listing.location %>"; -->
 </script>
 <div class="container mt-4 d-flex justify-content-center">
   <div style="max-width: 600px; width: 100%;">
