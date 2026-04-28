@@ -166,3 +166,6 @@ body{
   display: block;
   margin-bottom: 15px;
 }
+#map { 
+  height:400px;
+   width: 80vh; }

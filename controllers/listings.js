@@ -68,7 +68,8 @@ module.exports.index=async (req, res) => {
       let filename=req.file.filename;
       updatedListing.image.url=url;
       updatedListing.image.filename=filename;
-      await updatedListing.save();}
+      await updatedListing.save();
+    }
             if (!updatedListing) {
               req.flash("error", "Listing not found!");
               return res.redirect("/listings");
