@@ -1,64 +1,115 @@
 <style>
-  .d-flex {
-  align-items: center;
-}
+  .btn-search {
+    background-color: #ff385c;
+    color: white;
+    border-radius: 20px;
+    padding: 0 1rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    border: none;
+  }
 
-.form-control {
-  height: 40px;
-  font-size: 0.9rem;
-  border-radius: 20px;
-}
+  .btn-search:hover {
+    background-color: #ff385c;
+    color: white;
+  }
 
-.btn-search {
-  height: 40px;              /* ✅ same height as input */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  .btn-search i {
+    font-size: 0.8rem;
+  }
 
-  background-color: #ff385c;
-  color: white;
-  border-radius: 20px;
-  padding: 0 1rem;
-  font-size: 0.85rem;
-  border: none;
-}
+  .search-input {
+    height: 40px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    width: 220px;
+  }
 
-.btn-search i {
-  font-size: 0.8rem;
-}
+  .navbar {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .menu-btn {
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    padding: 6px 10px;
+    background-color: white;
+  }
+
+  .menu-btn i {
+    font-size: 1rem;
+  }
 </style>
-
 
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-solid fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-solid fa-compass"></i>
+    </a>
+
+    <button 
+      class="navbar-toggler" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#navbarNavAltMarkup"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      
+
+      <!-- LEFT -->
       <div class="navbar-nav">
-        <!-- <a class="nav-link active" href="/">Home</a> -->
         <a class="nav-link" href="/listings">Explore</a>
-    
-      </div>
-      <div class="navbar-nav ms-auto">
-         <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search destinations" aria-label="Search"/>
-      <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-    </form>
       </div>
 
-      <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="/listings/new">StayGo your home</a>
-        <% if(!currUser){ %>
-          <a class="nav-link active" href="/signup"><b>Signup</b></a>
-          <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } else { %>
-          <a class="nav-link" href="/logout"><b>Logout</b></a>
-        <% } %>
+      <!-- CENTER -->
+      <div class="d-flex justify-content-center flex-grow-1">
+        <form class="d-flex align-items-center" role="search" action="/listings/search" method="GET">
+          <input 
+            class="form-control me-2 search-input" 
+            type="search" 
+            name="q"
+            placeholder="Search destinations"
+          />
+          <button class="btn btn-search" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+          </button>
+        </form>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="navbar-nav ms-auto align-items-center">
+
+        <a class="nav-link me-3" href="/listings/new">StayGo your home</a>
+
+        <div class="dropdown">
+          <button 
+            class="btn menu-btn dropdown-toggle" 
+            type="button" 
+            data-bs-toggle="dropdown"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+
+            <% if(!currUser){ %>
+              <li><a class="dropdown-item" href="/signup">Signup</a></li>
+              <li><a class="dropdown-item" href="/login">Login</a></li>
+            <% } else { %>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            <% } %>
+
+          </ul>
+        </div>
+
       </div>
 
     </div>
