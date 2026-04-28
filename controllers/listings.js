@@ -1,9 +1,12 @@
-const Listing = require("../Models/listing.js");
+const Listing = require("../models/listing.js");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 
-const mapToken = process.env.Map_Token;
+// ✅ Correct env variable (MUST be uppercase in .env)
+const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
+
+// ================= INDEX =================
 module.exports.index = async (req, res) => {
   const { category } = req.query;
 
@@ -18,6 +21,8 @@ module.exports.index = async (req, res) => {
   res.render("listings/index.ejs", { allListings, category });
 };
 
+
+// ================= SEARCH =================
 module.exports.searchListings = async (req, res) => {
   const { q } = req.query;
 
@@ -42,10 +47,14 @@ module.exports.searchListings = async (req, res) => {
   res.render("listings/index.ejs", { allListings, category: null });
 };
 
+
+// ================= NEW FORM =================
 module.exports.renderNewForm = (req, res) => {
   res.render("listings/new.ejs");
 };
 
+
+// ================= SHOW LISTING (MAP FIX HERE) =================
 module.exports.showListing = async (req, res) => {
   const { id } = req.params;
 
@@ -58,9 +67,15 @@ module.exports.showListing = async (req, res) => {
     return res.redirect("/listings");
   }
 
-  res.render("listings/show.ejs", { listing });
+  // ✅ PASS mapToken TO EJS (IMPORTANT)
+  res.render("listings/show.ejs", {
+    listing,
+    mapToken,
+  });
 };
 
+
+// ================= CREATE LISTING =================
 module.exports.createListing = async (req, res) => {
   let response = await geocodingClient
     .forwardGeocode({
@@ -74,16 +89,16 @@ module.exports.createListing = async (req, res) => {
   newListing.owner = req.user._id;
 
   if (req.file) {
-    let url = req.file.path;
-    let filename = req.file.filename;
-
     newListing.image = {
-      url,
-      filename,
+      url: req.file.path,
+      filename: req.file.filename,
     };
   }
 
-  newListing.geometry = response.body.features[0].geometry;
+  // ✅ SAFE geometry assignment
+  if (response.body.features.length) {
+    newListing.geometry = response.body.features[0].geometry;
+  }
 
   await newListing.save();
 
@@ -91,6 +106,8 @@ module.exports.createListing = async (req, res) => {
   res.redirect("/listings");
 };
 
+
+// ================= EDIT FORM =================
 module.exports.renderEditForm = async (req, res) => {
   const { id } = req.params;
 
@@ -104,6 +121,8 @@ module.exports.renderEditForm = async (req, res) => {
   res.render("listings/edit.ejs", { listing });
 };
 
+
+// ================= UPDATE LISTING =================
 module.exports.updateListing = async (req, res) => {
   const { id } = req.params;
 
@@ -119,15 +138,10 @@ module.exports.updateListing = async (req, res) => {
   }
 
   if (req.file) {
-    let url = req.file.path;
-    let filename = req.file.filename;
-
     updatedListing.image = {
-      url,
-      filename,
+      url: req.file.path,
+      filename: req.file.filename,
     };
-
-    await updatedListing.save();
   }
 
   if (req.body.listing.location) {
@@ -138,14 +152,19 @@ module.exports.updateListing = async (req, res) => {
       })
       .send();
 
-    updatedListing.geometry = response.body.features[0].geometry;
-    await updatedListing.save();
+    if (response.body.features.length) {
+      updatedListing.geometry = response.body.features[0].geometry;
+    }
   }
+
+  await updatedListing.save();
 
   req.flash("success", "Successfully updated the listing!");
   res.redirect(`/listings/${id}`);
 };
 
+
+// ================= DELETE =================
 module.exports.deleteListing = async (req, res) => {
   const { id } = req.params;
 

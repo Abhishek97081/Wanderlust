@@ -2,19 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
 
-const defaultImages = [
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60",
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60",
-  "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=60",
-  "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=60",
-  "https://images.unsplash.com/photo-1464890100898-a385f744067f?auto=format&fit=crop&w=800&q=60"
-];
-
 const listingSchema = new Schema({
   title: {
     type: String,
     required: true,
   },
+
   description: String,
 
   image: {
@@ -25,29 +18,34 @@ const listingSchema = new Schema({
   price: Number,
   location: String,
   country: String,
+
   reviews: [
     {
       type: Schema.Types.ObjectId,
       ref: "Review",
     },
   ],
+
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+
   geometry: {
-    type: { 
-      type: String, 
-      enum: ['Point'], 
-      required: true  },  
+    type: {
+      type: String,
+      enum: ["Point"],
+      default: "Point",
+    },
     coordinates: {
       type: [Number],
-      required: true
-    }
+      default: [77.209, 28.6139],
+    },
   },
+
   category: {
     type: String,
-    enum: ["Mountains", "Arctic", "Pools", "Camping", "Farms","Other"],
+    enum: ["Mountains", "Arctic", "Pools", "Camping", "Farms", "Other"],
     default: "Other",
   },
 });
@@ -58,6 +56,7 @@ listingSchema.post("findOneAndDelete", async function (doc) {
   }
 });
 
-const Listing = mongoose.model("Listing", listingSchema);
+const Listing =
+  mongoose.models.Listing || mongoose.model("Listing", listingSchema);
 
 module.exports = Listing;
